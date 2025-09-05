@@ -6,7 +6,7 @@ const foodSchema = new mongoose.Schema({
   description: { type: String },
   foodPartner: { type: mongoose.Schema.Types.ObjectId, ref: "FoodPartner" },
 });
-
+// hello
 const foodModel = mongoose.model("food",foodSchema)
 
 module.exports = foodModel
