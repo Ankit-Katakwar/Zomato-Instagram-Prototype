@@ -3,6 +3,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const foodPartnerModel = require("../model/foodpartner.model");
 
+
 async function registerUser(req, res) {
   const { fullName, email, password } = req.body;
 
@@ -28,7 +29,7 @@ async function registerUser(req, res) {
     {
       id: user._id,
     },
-    "7985c60742aab30474bde936eee0535d"
+    process.env.JWT_Secret
   );
 
   res.cookie("token", token);
@@ -62,7 +63,7 @@ async function userLogin(req, res) {
     {
       id: user._id,
     },
-    "7985c60742aab30474bde936eee0535d"
+    process.env.JWT_Secret
   );
 
   res.cookie("token", token);
@@ -103,7 +104,7 @@ async function foodPartnerRegister(req, res) {
 
   const token = jwt.sign(
     { id: foodPartner.id },
-    "7985c60742aab30474bde936eee0535d"
+    process.env.JWT_Secret
   );
   res.cookie("token", token);
 
@@ -135,7 +136,7 @@ async function foodPartnerLogin(req, res) {
 
   const token = jwt.sign(
     { id: foodPartner._id },
-    "7985c60742aab30474bde936eee0535d"
+    process.env.JWT_Secret
   );
 
   res.cookie("token",token)
@@ -145,6 +146,7 @@ async function foodPartnerLogin(req, res) {
     foodPartner: { name: foodPartner.name, email: foodPartner.email },
   });
 }
+
 function foodPartnerLogout(req,res){
   res.clearCookie("token")
   res.status(201).json({
