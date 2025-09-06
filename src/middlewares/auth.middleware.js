@@ -12,10 +12,14 @@ async function foodPartnerMiddleware(req, res, next) {
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_Secret);
-    const foodPartner = foodPartnerModel.findById(decoded.id);
+     console.log("Decoded Token:", decoded);   
+    const foodPartner = await foodPartnerModel.findById(decoded.id);
+      console.log("Food Partner from DB:", foodPartner); 
+
     req.foodPartner = foodPartner;
 
     next();
+
   } catch (error) {
     res.status(401).json({
       message: "Invalid Token.",

@@ -96,14 +96,14 @@ async function foodPartnerRegister(req, res) {
 
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  const foodPartner = foodPartnerModel.create({
+  const foodPartner = await foodPartnerModel.create({
     name,
     email,
     password: hashedPassword,
   });
 
   const token = jwt.sign(
-    { id: foodPartner.id },
+    { id: foodPartner._id },
     process.env.JWT_Secret
   );
   res.cookie("token", token);
